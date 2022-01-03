@@ -25,17 +25,16 @@ final class ViewController: UIViewController {
         sampleCollectionView.register(UINib(nibName: "CustomCell", bundle: nil), forCellWithReuseIdentifier: "CustomCell")
         sampleCollectionView.isPagingEnabled = true
 
-        var cellSize:CGSize {
-            let height = sampleCollectionView.frame.height
-            let width = sampleCollectionView.frame.width
-            return CGSize(width: width, height: height)
-        }
-
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal // 横スクロール
         layout.minimumLineSpacing = 0
-        layout.itemSize = cellSize
         sampleCollectionView.collectionViewLayout = layout
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        (sampleCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = sampleCollectionView.bounds.size
     }
 }
 
