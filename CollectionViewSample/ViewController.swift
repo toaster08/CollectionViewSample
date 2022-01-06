@@ -25,6 +25,7 @@ final class ViewController: UIViewController {
         sampleCollectionView.dataSource = self
         sampleCollectionView.delegate = self
         sampleCollectionView.register(UINib(nibName: "CustomCell", bundle: nil), forCellWithReuseIdentifier: "CustomCell")
+        sampleCollectionView.isPagingEnabled = true
 
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal // 横スクロール
