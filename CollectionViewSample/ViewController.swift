@@ -12,12 +12,6 @@ final class ViewController: UIViewController {
 
     private let models = Model.createModels()
 
-    //    private var cellSize:CGSize {
-    //        let height = sampleCollectionView.frame.height
-    //        let width = sampleCollectionView.frame.width
-    //        return CGSize(width: width, height: height)
-    //    }
-
     @IBOutlet private weak var sampleCollectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -37,12 +31,6 @@ final class ViewController: UIViewController {
 
     override func viewDidLayoutSubviews(){
         super.viewDidLayoutSubviews()
-        (sampleCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = sampleCollectionView.bounds.size
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
         (sampleCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = sampleCollectionView.bounds.size
     }
 }
@@ -79,8 +67,6 @@ extension ViewController: WKUIDelegate {
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
-//        var subview = UIView(frame: .zero)
-//        view.addSubview(subview)
         view = webView
 
         let myURL = URL(string:"https://twitter.com/home")
