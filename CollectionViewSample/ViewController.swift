@@ -39,6 +39,12 @@ final class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         (sampleCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = sampleCollectionView.bounds.size
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        (sampleCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = sampleCollectionView.bounds.size
+    }
 }
 
 extension ViewController: UICollectionViewDataSource {
