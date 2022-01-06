@@ -6,36 +6,39 @@
 //
 
 import UIKit
+import WebKit
 
 final class ViewController: UIViewController {
 
     private let models = Model.createModels()
 
-//    private var cellSize:CGSize {
-//        let height = sampleCollectionView.frame.height
-//        let width = sampleCollectionView.frame.width
-//        return CGSize(width: width, height: height)
-//    }
+    //    private var cellSize:CGSize {
+    //        let height = sampleCollectionView.frame.height
+    //        let width = sampleCollectionView.frame.width
+    //        return CGSize(width: width, height: height)
+    //    }
 
     @IBOutlet private weak var sampleCollectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         sampleCollectionView.dataSource = self
+        sampleCollectionView.delegate = self
         sampleCollectionView.register(UINib(nibName: "CustomCell", bundle: nil), forCellWithReuseIdentifier: "CustomCell")
-        sampleCollectionView.isPagingEnabled = true
 
-        var cellSize:CGSize {
-            let height = sampleCollectionView.frame.height
-            let width = sampleCollectionView.frame.width
-            return CGSize(width: width, height: height)
-        }
+        sampleCollectionView.isPagingEnabled = true
 
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal // 横スクロール
         layout.minimumLineSpacing = 0
-        layout.itemSize = cellSize
         sampleCollectionView.collectionViewLayout = layout
+
+        self.sampleCollectionView.isUserInteractionEnabled = true
+    }
+
+    override func viewDidLayoutSubviews(){
+        super.viewDidLayoutSubviews()
+        (sampleCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = sampleCollectionView.bounds.size
     }
 }
 
@@ -51,5 +54,32 @@ extension ViewController: UICollectionViewDataSource {
             cell.setupCell(model: models[indexPath.row])
         }
         return cell
+    }
+}
+
+extension ViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        print("Selected Cell: \(indexPath.row)")
+
+        loadWebView()
+    }
+}
+
+extension ViewController: WKUIDelegate {
+    func loadWebView() {
+        var webView: WKWebView!
+
+        let webConfiguration = WKWebViewConfiguration()
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+//        var subview = UIView(frame: .zero)
+//        view.addSubview(subview)
+        view = webView
+
+        let myURL = URL(string:"https://twitter.com/home")
+        let myRequest = URLRequest(url: myURL!)
+        webView.load(myRequest)
     }
 }

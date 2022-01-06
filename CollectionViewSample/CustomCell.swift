@@ -20,5 +20,6 @@ class CustomCell: UICollectionViewCell {
         label.text = model.title
         self.backgroundColor = .lightGray
     }
-    
+
 }
+
